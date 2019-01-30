@@ -1,5 +1,6 @@
-if (process.argv[3] === 'server') {
-    require('./server')
+if (process.argv[2] === 'server') {
+    console.log('start as server');
+    require('./server');
 } else {
     const {
         PROVIDERS,
