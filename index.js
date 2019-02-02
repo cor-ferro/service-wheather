@@ -7,7 +7,10 @@ if (process.argv[2] === 'server') {
         get: getWheather
     } = require('./lib/getWheather');
 
-    getWheather({}).then((output) => {
+    getWheather({
+        lat: '59.943688',
+        lon: '30.351207'
+    }).then((output) => {
         console.log(output)
-    })
+    });
 }

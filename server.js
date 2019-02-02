@@ -1,40 +1,50 @@
 const {
     PROVIDERS,
-    get: getWheather
+    get: getWheather,
+    startInvalidateTimer
 } = require('./lib/getWheather');
 
 const fastify = require('fastify')()
 
-const UPDATE_TIME = 1000 * 60 * 10; // 10 minutes
+fastify.get('/actual', async () => {
+    try {
+        const result = await getWheather({});
 
-let actualWheater = null;
+        return result;
+    } catch (e) {
+        console.error(e);
+        return {};
+    }
+})
 
-const loadWheather = () => {
-    console.log(`loadWheather at ${Date.now()}`)
-    getWheather({}).then((output) => {
-        actualWheater = output;
-    });
+const getSchema = {
+    querystring: {
+        lat: { type: 'string' },
+        lon: { type: 'string' }
+    }
 }
 
-setInterval(() => {
-    loadWheather();
-}, UPDATE_TIME);
+fastify.get('/get', {schema: getSchema}, async (request) => {
+    const {lat, lon} = request.query;
 
-loadWheather();
+    try {
+        const result = await getWheather({lat, lon});
 
-fastify.get('/actual', async () => {
-    if (actualWheater) {
-        return actualWheater;
+        return result;
+    } catch (e) {
+        console.error(e);
+        return {};
     }
-
-    return {};
 })
 
 const start = async () => {
     try {
+        startInvalidateTimer();
+
         await fastify.listen(3000, '0.0.0.0')
         fastify.log.info(`server listening on ${fastify.server.address().port}`)
     } catch (err) {
+        console.log(err);
         fastify.log.error(err)
         process.exit(1)
     }
