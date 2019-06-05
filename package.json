@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js server"
+    "start": "node index.js server",
+    "doc:build": "docker build --tag=service-wheather .",
+    "doc:run": "docker run -d -p 49160:3000 service-wheather"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +15,8 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
     "fastify": "^1.13.4",
-    "pm2": "^3.2.9",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
-  }
+  },
+  "devDependencies": {}
 }
