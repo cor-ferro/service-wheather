@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js server",
-    "doc:build": "docker build --tag=service-wheather .",
-    "doc:run": "docker run -d -p 49160:3000 service-wheather"
+    "docker:build": "docker build --tag=service-wheather .",
+    "docker:run": "docker run -d -p 49160:3000 service-wheather"
   },
   "keywords": [],
   "author": "",
